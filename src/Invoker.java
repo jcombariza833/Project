@@ -21,6 +21,10 @@ public class Invoker {
         return new CMDGetParties(aggregator).execute();
     }
 
+    public Customers getWaitingParties(){
+        return new CMDGetWaitingList(aggregator).execute();
+    }
+
     public Verification placeOrder(int item, int tableId){
         return new CMDSubmitOrder(aggregator,item, tableId).execute();
     }

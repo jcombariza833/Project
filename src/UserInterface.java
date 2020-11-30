@@ -10,7 +10,7 @@ public class UserInterface {
             principalMenu();
             displayMenuOptionInput();
 
-            int menuOption = validateIntInput(scanner,1,8);
+            int menuOption = validateIntInput(scanner,1,9);
             separator();
 
             switch (menuOption) {
@@ -65,6 +65,13 @@ public class UserInterface {
                     display(paymentMessages);
                     break;
                 case 8:
+                    String[] waitingParties = SystemInterface.getWaitingParties();
+                    separator();
+                    System.out.println("WAITING PARTIES");
+                    separator();
+                    display(waitingParties);
+                    break;
+                case 9:
                     running = false;
                     break;
 
@@ -90,7 +97,8 @@ public class UserInterface {
                         "\t5 - Request a table\n"+
                         "\t6 - Display parties\n"+
                         "\t7 - Pay Tab\n"+
-                        "\t8 - Quit");
+                        "\t8 - Display waiting parties\n"+
+                        "\t9 - Quit");
     }
 
     private void  displayMenuOptionInput() {

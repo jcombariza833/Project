@@ -87,6 +87,22 @@ public class SystemInterface {
         return items;
     }
 
+    public static String[] getWaitingParties() {
+        Customers customers = invoker.getParties();
+        Iterator<Party> i = customers.getWaitingIterator();
+
+        String[] items = new String[customers.getWaitingListSize()];
+        int index = 0;
+
+        while (i.hasNext()) {
+            Party item = i.next();
+            String output = String.format("\tA party with %d people", item.getPeople());
+            items[index++] = output ;
+        }
+
+        return items;
+    }
+
     public static String[] getTab(int partyId) {
         Tab tab = invoker.getTab(partyId);
         if(tab == null) return new String[] {" The party does not exist"};

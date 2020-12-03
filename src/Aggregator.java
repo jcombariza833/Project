@@ -10,14 +10,12 @@ import tables.Tables;
 
 public class Aggregator implements Observer {
     private Menu menu;
-    private Orders orders;
     private Inventory inventory;
     private Customers customers;
     private Tables tables;
 
     public Aggregator() {
         this.menu = new Menu();
-        this.orders = new Orders();
         this.inventory = new Inventory();
         this.customers = new Customers();
         this.tables = new Tables();
@@ -44,9 +42,12 @@ public class Aggregator implements Observer {
     public void update() {
         Tables tables = getTables();
         Party party = getCustomers().getWaitingParty();
+
+        if (party == null) return;
+
         int people = party.getPeople();
 
-        if(tables.isTablesAvailable() && (tables.getTablesSize()* TableItem.MAX_SEATS > people)) {
+        if(tables.isTablesAvailable() && (tables.getTablesSize()* TableItem.MAX_SEATS >= people)) {
 
             TableItem table = tables.getTable();
             CompositeTable cTable=  tableAssignation(people,table);

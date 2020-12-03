@@ -30,7 +30,7 @@ public class CMDPayTab implements Command<Verification> {
             for (int t: associatedTables) {
                 tables.add(new TableItem(t));
             }
-            verification.setMessage("The order was payed successfully");
+            verification.setMessage("The order was paid successfully");
         } else {
             verification.setMessage("\tthe party selected does not exist");
         }

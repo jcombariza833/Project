@@ -16,7 +16,7 @@ public class CMDRequestTable implements Command<Verification> {
     public Verification execute() {
         Verification verification = new Verification();
         Tables tables = aggregator.getTables();
-        if(tables.isTablesAvailable() && (tables.getTablesSize()*TableItem.MAX_SEATS > people)) {
+        if(tables.isTablesAvailable() && (tables.getTablesSize()*TableItem.MAX_SEATS >= people)) {
 
             TableItem table = tables.getTable();
             CompositeTable cTable=  tableAssignation(people,table);
@@ -29,8 +29,12 @@ public class CMDRequestTable implements Command<Verification> {
             verification.setMessage(cTable.tableDescription());
 
         } else {
-            aggregator.getCustomers().addToWaitingList(new Party(people));
-            verification.setMessage("Party is in the waiting list");
+            if(people > Tables.MAX_PEOPLE) {
+                verification.setMessage("Our restaurant doe not have the capacity to serve your party");
+            } else {
+                aggregator.getCustomers().addToWaitingList(new Party(people));
+                verification.setMessage("Party is in the waiting list");
+            }
         }
         return verification;
     }
@@ -38,7 +42,7 @@ public class CMDRequestTable implements Command<Verification> {
     private CompositeTable tableAssignation(int people, TableItem tableItem) {
         CompositeTable cTable=  new CompositeTable(tableItem);
         int tablePeople = TableItem.MAX_SEATS;
-        while (tablePeople <= people) {
+        while (tablePeople < people) {
             cTable.addTable(aggregator.getTables().getTable());
             tablePeople += TableItem.MAX_SEATS;
         }

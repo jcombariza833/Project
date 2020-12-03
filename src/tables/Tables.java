@@ -10,6 +10,7 @@ import java.util.Stack;
 public class Tables implements Subject {
     private Stack<TableItem> tables;
     private ArrayList<Observer> observers;
+    public final static int MAX_PEOPLE = 20;
 
     public Tables() {
         this.tables = new Stack<>();
